@@ -2,32 +2,32 @@ import { motion } from "framer-motion";
 import { Code2, Palette, Rocket, BookOpen } from "lucide-react";
 
 const skills = [
-  { category: "Frontend", items: ["React", "Next.js", "TypeScript", "Tailwind CSS", "Framer Motion"] },
-  { category: "Backend", items: ["Node.js", "Python", "PostgreSQL", "MongoDB", "Redis"] },
-  { category: "Tools", items: ["Git", "Docker", "AWS", "Figma", "VS Code"] },
-  { category: "Soft Skills", items: ["Problem Solving", "Communication", "Leadership", "Agile"] },
+  { category: "Building", items: ["Lovable", "Cursor", "v0", "Bolt", "Replit"] },
+  { category: "Product", items: ["Figma", "Notion", "Linear", "Miro", "Framer"] },
+  { category: "AI Tools", items: ["ChatGPT", "Claude", "Midjourney", "Copilot"] },
+  { category: "Core Skills", items: ["Product Thinking", "Rapid Prototyping", "User Research", "Storytelling"] },
 ];
 
 const values = [
   {
-    icon: Code2,
-    title: "Clean Code",
-    description: "Writing maintainable, scalable code that stands the test of time.",
+    icon: Rocket,
+    title: "Ship Fast",
+    description: "Move quickly from idea to MVP. Iterate based on real feedback.",
   },
   {
     icon: Palette,
-    title: "Design Focus",
-    description: "Creating intuitive interfaces that delight users at every interaction.",
+    title: "Vibe First",
+    description: "Trust intuition and aesthetics. Great products feel right before they work right.",
   },
   {
-    icon: Rocket,
-    title: "Performance",
-    description: "Optimizing for speed and efficiency without compromising quality.",
+    icon: Code2,
+    title: "AI-Augmented",
+    description: "Leverage AI tools to build beyond traditional skill limits.",
   },
   {
     icon: BookOpen,
-    title: "Continuous Learning",
-    description: "Staying updated with the latest technologies and best practices.",
+    title: "Always Learning",
+    description: "Constantly exploring new tools, trends, and ways to create.",
   },
 ];
 
@@ -55,19 +55,18 @@ export function About() {
           >
             <div className="prose prose-lg dark:prose-invert">
               <p className="text-muted-foreground leading-relaxed mb-6">
-                I'm <strong className="text-foreground">Shivam Sharma</strong>, a full-stack developer 
-                with a passion for building digital products that make a difference. With over 5 years 
-                of experience in web development, I've had the privilege of working with startups and 
-                enterprises alike.
+                I'm <strong className="text-foreground">Shivam Sharma</strong>, a vibe coder and product 
+                builder who believes the best way to learn is to ship. I use AI-powered tools and 
+                no-code platforms to turn ideas into working products—fast.
               </p>
               <p className="text-muted-foreground leading-relaxed mb-6">
-                My journey in tech began with curiosity about how things work on the internet. 
-                Today, I specialize in creating end-to-end solutions that are not only functional 
-                but also beautiful and user-centric.
+                I'm not a traditional developer who memorizes syntax. Instead, I focus on understanding 
+                user problems, designing experiences, and leveraging the latest tools to bring 
+                solutions to life without getting lost in the technical weeds.
               </p>
               <p className="text-muted-foreground leading-relaxed">
-                When I'm not coding, you can find me exploring new technologies, contributing to 
-                open-source projects, or sharing knowledge through technical writing and mentoring.
+                This portfolio is my build log—a collection of projects, case studies, and documentation 
+                that showcase how I think, what I've shipped, and what I'm learning along the way.
               </p>
             </div>
 
@@ -131,23 +130,23 @@ export function About() {
               transition={{ delay: 0.4 }}
               className="mt-10 p-6 bg-gradient-to-br from-primary/10 to-primary/5 rounded-2xl border border-primary/20"
             >
-              <h4 className="font-semibold mb-2">Experience Highlights</h4>
+              <h4 className="font-semibold mb-2">What I Bring</h4>
               <ul className="space-y-3 text-muted-foreground">
                 <li className="flex items-start gap-2">
                   <span className="w-1.5 h-1.5 rounded-full bg-primary mt-2 flex-shrink-0" />
-                  <span>Led development of 15+ production applications</span>
+                  <span>Shipped multiple products from idea to launch using AI tools</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="w-1.5 h-1.5 rounded-full bg-primary mt-2 flex-shrink-0" />
-                  <span>Collaborated with cross-functional teams of 20+ members</span>
+                  <span>Strong product intuition and user-first thinking</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="w-1.5 h-1.5 rounded-full bg-primary mt-2 flex-shrink-0" />
-                  <span>Contributed to open-source projects with 1000+ stars</span>
+                  <span>Rapid prototyping—concept to clickable in hours, not weeks</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="w-1.5 h-1.5 rounded-full bg-primary mt-2 flex-shrink-0" />
-                  <span>Mentored junior developers and conducted tech workshops</span>
+                  <span>Documenting everything for learning and sharing</span>
                 </li>
               </ul>
             </motion.div>
