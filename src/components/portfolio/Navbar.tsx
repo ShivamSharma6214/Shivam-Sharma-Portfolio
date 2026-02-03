@@ -53,7 +53,11 @@ export function Navbar() {
                 {link.label}
               </a>
             ))}
-            <Button size="sm" className="ml-4">
+            <Button
+              size="sm"
+              className="ml-4"
+              onClick={() => window.open("/Shivam_Sharma_Resume.pdf", "_blank")}
+            >
               Download CV
             </Button>
           </div>

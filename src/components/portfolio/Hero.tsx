@@ -54,8 +54,7 @@ export function Hero() {
               transition={{ delay: 0.5 }}
               className="text-lg text-muted-foreground max-w-md mb-8"
             >
-              Vibe coder & product thinker. I turn ideas into reality through rapid prototyping, 
-              AI-powered tools, and a relentless focus on shipping. Explore my builds below.
+              Aspiring Product Manager focused on turning ideas into real products through structured problem solving, rapid prototyping, and AI-assisted development, combining product thinking with technical understanding to ship usable solutions. Explore my work below.
             </motion.p>
 
             <motion.div
@@ -114,9 +113,13 @@ export function Hero() {
               <div className="absolute -top-8 -left-8 w-64 h-64 bg-primary/20 rounded-full blur-3xl" />
               <div className="absolute -bottom-8 -right-8 w-48 h-48 bg-primary/30 rounded-full blur-2xl" />
               
-              {/* Profile placeholder */}
-              <div className="relative w-80 h-80 rounded-2xl bg-gradient-to-br from-primary/20 to-primary/5 border border-primary/20 flex items-center justify-center">
-                <span className="text-8xl font-bold text-primary">SS</span>
+              {/* Profile image with frosted glass effect */}
+              <div className="relative w-72 h-[28rem] rounded-3xl bg-gradient-to-br from-primary/20 to-primary/5 border border-primary/20 overflow-hidden shadow-[0_25px_80px_rgba(15,23,42,0.35)]">
+                <img
+                  src="/portrait.png"
+                  alt="Shivam Sharma portrait"
+                  className="w-full h-full object-cover object-center"
+                />
               </div>
             </div>
           </motion.div>
