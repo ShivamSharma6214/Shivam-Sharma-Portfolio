@@ -41,9 +41,9 @@ export function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
-              className="text-5xl md:text-7xl font-bold text-primary-foreground mb-6 leading-tight"
+              className="text-5xl md:text-7xl font-bold mb-6 leading-tight"
             >
-              Shivam
+              <span className="text-foreground">Shivam</span>
               <br />
               <span className="text-primary">Sharma</span>
             </motion.h1>
@@ -52,7 +52,7 @@ export function Hero() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.5 }}
-              className="text-lg text-primary-foreground/70 max-w-md mb-8"
+              className="text-lg text-muted-foreground max-w-md mb-8"
             >
               A passionate developer crafting digital experiences through clean code 
               and thoughtful design. Explore my projects and case studies below.
