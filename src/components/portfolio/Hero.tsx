@@ -54,8 +54,8 @@ export function Hero() {
               transition={{ delay: 0.5 }}
               className="text-lg text-muted-foreground max-w-md mb-8"
             >
-              A passionate developer crafting digital experiences through clean code 
-              and thoughtful design. Explore my projects and case studies below.
+              Vibe coder & product thinker. I turn ideas into reality through rapid prototyping, 
+              AI-powered tools, and a relentless focus on shipping. Explore my builds below.
             </motion.p>
 
             <motion.div
