@@ -1,184 +1,225 @@
-import { motion } from "framer-motion";
-import { ExternalLink, Github, FileText } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
+import { useRef } from "react";
+import { motion, useReducedMotion } from "framer-motion";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
 
-interface Project {
-  id: number;
-  title: string;
+interface ProjectEntry {
+  name: string;
   description: string;
-  image: string;
   tags: string[];
-  liveUrl?: string;
-  githubUrl?: string;
-  docsUrl?: string;
+  spanClass: string;
+  link: string;
 }
 
-const projects: Project[] = [
+const projects: ProjectEntry[] = [
   {
-    id: 1,
-    title: "E-Commerce Platform",
-    description: "A full-stack e-commerce solution with real-time inventory management, payment integration, and analytics dashboard.",
-    image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&h=400&fit=crop",
-    tags: ["React", "Node.js", "MongoDB", "Stripe"],
-    liveUrl: "#",
-    githubUrl: "#",
-    docsUrl: "#",
+    name: "UrbanIQ",
+    description:
+      "University-Deployed Platform · Jan 2024 – Dec 2024. Campus complaint and document management platform adopted by university administration. Processed 4,000+ submissions across departments in 4 months. Ran Python (pandas) EDA on complaint records — findings reduced avg. resolution time by 30%. Built Metabase dashboard for weekly ops review.",
+    tags: [
+      "Product Management",
+      "Python",
+      "Metabase",
+      "React",
+      "Agile",
+      "4,000+ submissions",
+      "30% faster resolution",
+      "25% sprint velocity improvement",
+    ],
+    spanClass: "md:col-span-2",
+    link: "https://github.com/ShivamSharma6214",
   },
   {
-    id: 2,
-    title: "AI Content Generator",
-    description: "An intelligent content creation tool powered by GPT-4, featuring custom templates and brand voice training.",
-    image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600&h=400&fit=crop",
-    tags: ["Python", "OpenAI", "FastAPI", "React"],
-    liveUrl: "#",
-    githubUrl: "#",
-    docsUrl: "#",
+    name: "DreamAI",
+    description:
+      "AI-Powered B2C Platform · Feb 2026 – Present. Defining roadmap, GTM strategy, and retention loops for an AI image generation platform. Instrumented Mixpanel across 5 core touchpoints — signup, first generation, share, D3 return, D7 return. Designed retention-first onboarding targeting 5% D7 retention.",
+    tags: [
+      "Product Strategy",
+      "Next.js",
+      "Mixpanel",
+      "GenAI",
+      "Retention",
+      "5 Mixpanel touchpoints",
+      "D7 retention target: 5%",
+    ],
+    spanClass: "md:col-span-1",
+    link: "https://github.com/ShivamSharma6214",
   },
   {
-    id: 3,
-    title: "Project Management Tool",
-    description: "Collaborative project management with Kanban boards, time tracking, and team communication features.",
-    image: "https://images.unsplash.com/photo-1611224923853-80b023f02d71?w=600&h=400&fit=crop",
-    tags: ["Next.js", "Prisma", "PostgreSQL", "Socket.io"],
-    liveUrl: "#",
-    githubUrl: "#",
+    name: "Animatrixx",
+    description:
+      "Anime Streaming Platform Concept. UI/UX concept for an anime streaming platform. Focus on content discovery, watchlist management, and clean dark-mode interface design.",
+    tags: ["UI Design", "React", "Tailwind CSS"],
+    spanClass: "md:col-span-1",
+    link: "https://github.com/ShivamSharma6214",
   },
   {
-    id: 4,
-    title: "Health & Fitness App",
-    description: "Mobile-first fitness tracking application with workout plans, nutrition logging, and progress analytics.",
-    image: "https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?w=600&h=400&fit=crop",
-    tags: ["React Native", "Firebase", "Redux"],
-    liveUrl: "#",
-    githubUrl: "#",
-    docsUrl: "#",
-  },
-  {
-    id: 5,
-    title: "Real Estate Marketplace",
-    description: "Property listing platform with virtual tours, mortgage calculator, and agent matching system.",
-    image: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=600&h=400&fit=crop",
-    tags: ["Vue.js", "Laravel", "MySQL", "AWS"],
-    liveUrl: "#",
-    githubUrl: "#",
-  },
-  {
-    id: 6,
-    title: "Learning Management System",
-    description: "Educational platform with course creation tools, progress tracking, and certificate generation.",
-    image: "https://images.unsplash.com/photo-1501504905252-473c47e087f8?w=600&h=400&fit=crop",
-    tags: ["Django", "React", "PostgreSQL", "Redis"],
-    liveUrl: "#",
-    docsUrl: "#",
+    name: "DOCMIZE",
+    description:
+      "Hospital Management System · 2024. Next.js 14 / Supabase / Prisma hospital management system with 4 role-based dashboards — Admin, Doctor, Nurse, Patient. Designed relational schema for patient records, appointment scheduling, and department workflows. Deployed live on Vercel.",
+    tags: [
+      "Next.js 14",
+      "Supabase",
+      "Prisma",
+      "TypeScript",
+      "REST API",
+      "4 role-based dashboards",
+      "Live on Vercel",
+    ],
+    spanClass: "md:col-span-2",
+    link: "https://github.com/ShivamSharma6214/DOCMIZE",
   },
 ];
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1,
-    },
-  },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: { opacity: 1, y: 0 },
-};
-
 export function ProjectsSection() {
+  const cardRefs = useRef<(HTMLArticleElement | null)[]>([]);
+  const reducedMotion = useReducedMotion();
+
+  useGSAP(() => {
+    if (reducedMotion) {
+      return;
+    }
+
+    const teardown: Array<() => void> = [];
+
+    cardRefs.current.forEach((card) => {
+      if (!card) {
+        return;
+      }
+
+      const glow = card.querySelector<HTMLElement>("[data-glow]");
+
+      const onMove = (event: MouseEvent) => {
+        const rect = card.getBoundingClientRect();
+        const px = ((event.clientX - rect.left) / rect.width - 0.5) * 2;
+        const py = ((event.clientY - rect.top) / rect.height - 0.5) * 2;
+
+        gsap.to(card, {
+          rotateY: px * 7.5,
+          rotateX: py * -7.5,
+          transformPerspective: 920,
+          transformOrigin: "center",
+          duration: 0.34,
+          ease: "power2.out",
+        });
+
+        if (glow) {
+          gsap.to(glow, {
+            x: px * 36,
+            y: py * 32,
+            opacity: 0.72,
+            duration: 0.32,
+            ease: "power2.out",
+          });
+        }
+      };
+
+      const onEnter = () => {
+        gsap.to(card, { scale: 1.01, duration: 0.3, ease: "power2.out" });
+      };
+
+      const onLeave = () => {
+        gsap.to(card, {
+          rotateX: 0,
+          rotateY: 0,
+          scale: 1,
+          duration: 0.55,
+          ease: "power3.out",
+        });
+        if (glow) {
+          gsap.to(glow, { x: 0, y: 0, opacity: 0.32, duration: 0.45, ease: "power2.out" });
+        }
+      };
+
+      card.addEventListener("mousemove", onMove);
+      card.addEventListener("mouseenter", onEnter);
+      card.addEventListener("mouseleave", onLeave);
+
+      teardown.push(() => {
+        card.removeEventListener("mousemove", onMove);
+        card.removeEventListener("mouseenter", onEnter);
+        card.removeEventListener("mouseleave", onLeave);
+      });
+    });
+
+    return () => {
+      teardown.forEach((dispose) => dispose());
+    };
+  }, [reducedMotion]);
+
   return (
-    <section id="projects" className="py-24 bg-background">
-      <div className="max-w-7xl mx-auto px-6">
+    <section id="projects" className="py-24 md:py-28">
+      <div className="section-shell">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mb-16"
+          viewport={{ once: true, amount: 0.4 }}
+          transition={{ duration: reducedMotion ? 0 : 0.6 }}
+          className="mb-12 md:mb-14"
         >
-          <span className="text-primary font-medium">My Work</span>
-          <h2 className="text-4xl md:text-5xl font-bold mt-2 mb-4">
-            Featured Projects
-          </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            A collection of projects I've built, from concept to deployment. 
-            Each project showcases different technologies and problem-solving approaches.
-          </p>
+          <p className="text-xs uppercase tracking-[0.32em] text-brand-cyan">Selected Work</p>
+          <h2 className="font-display mt-4 text-5xl text-brand-ivory sm:text-6xl md:text-7xl">Projects</h2>
         </motion.div>
 
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
-        >
-          {projects.map((project) => (
-            <motion.div
-              key={project.id}
-              variants={itemVariants}
-              className="group bg-card rounded-xl overflow-hidden border border-border hover:border-primary/50 transition-all duration-300"
-              style={{ boxShadow: 'var(--shadow-card)' }}
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+          {projects.map((project, index) => (
+            <motion.article
+              key={project.name}
+              ref={(element) => {
+                cardRefs.current[index] = element;
+              }}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.28 }}
+              transition={{
+                duration: reducedMotion ? 0 : 0.65,
+                delay: reducedMotion ? 0 : index * 0.07,
+              }}
+              className={`${project.spanClass} group relative overflow-hidden rounded-3xl glass-card p-7 md:p-9 [transform-style:preserve-3d]`}
             >
-              <div className="relative h-48 overflow-hidden">
-                <img
-                  src={project.image}
-                  alt={project.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-card to-transparent" />
-              </div>
+              <div
+                data-glow
+                className="pointer-events-none absolute inset-0 opacity-30"
+                style={{
+                  background:
+                    "radial-gradient(circle at center, rgba(0,212,255,0.16), transparent 58%)",
+                }}
+              />
 
-              <div className="p-6">
-                <h3 className="text-xl font-semibold mb-2 group-hover:text-primary transition-colors">
-                  {project.title}
-                </h3>
-                <p className="text-muted-foreground text-sm mb-4 line-clamp-2">
+              <div className="absolute inset-0 rounded-3xl border border-brand-cyan/0 transition-colors duration-300 group-hover:border-brand-cyan/60" />
+
+              <div className="relative z-10">
+                <h3 className="font-display text-4xl text-brand-ivory sm:text-5xl">{project.name}</h3>
+                <p className="mt-4 max-w-2xl text-sm leading-relaxed text-[#f0ede8]/76 sm:text-base">
                   {project.description}
                 </p>
 
-                <div className="flex flex-wrap gap-2 mb-4">
+                <div className="mt-6 flex flex-wrap gap-2">
                   {project.tags.map((tag) => (
-                    <Badge key={tag} variant="secondary" className="text-xs">
+                    <span
+                      key={tag}
+                      className="rounded-full border border-white/15 bg-white/[0.04] px-3 py-1 text-[0.68rem] uppercase tracking-[0.19em] text-[#f0ede8]/86 sm:text-xs"
+                    >
                       {tag}
-                    </Badge>
+                    </span>
                   ))}
                 </div>
 
-                <div className="flex gap-2">
-                  {project.liveUrl && (
-                    <Button size="sm" variant="outline" asChild>
-                      <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
-                        <ExternalLink className="w-4 h-4 mr-1" />
-                        Live
-                      </a>
-                    </Button>
-                  )}
-                  {project.githubUrl && (
-                    <Button size="sm" variant="outline" asChild>
-                      <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
-                        <Github className="w-4 h-4 mr-1" />
-                        Code
-                      </a>
-                    </Button>
-                  )}
-                  {project.docsUrl && (
-                    <Button size="sm" variant="outline" asChild>
-                      <a href={project.docsUrl} target="_blank" rel="noopener noreferrer">
-                        <FileText className="w-4 h-4 mr-1" />
-                        Docs
-                      </a>
-                    </Button>
-                  )}
-                </div>
+                <a
+                  href={project.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  data-cursor-hover="true"
+                  className="mt-8 inline-block translate-y-2 text-sm uppercase tracking-[0.22em] text-brand-cyan opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100"
+                >
+                  View Project &rarr;
+                </a>
               </div>
-            </motion.div>
+            </motion.article>
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   );
 }
+

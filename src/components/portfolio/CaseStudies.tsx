@@ -1,137 +1,91 @@
-import { motion } from "framer-motion";
-import { ArrowRight, Clock, Users, TrendingUp } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { motion, useReducedMotion } from "framer-motion";
 
-interface CaseStudy {
-  id: number;
+interface CaseStudyEntry {
   title: string;
-  client: string;
   description: string;
-  image: string;
-  duration: string;
-  teamSize: string;
-  impact: string;
-  category: string;
+  link: string;
 }
 
-const caseStudies: CaseStudy[] = [
+const caseStudies: CaseStudyEntry[] = [
   {
-    id: 1,
-    title: "Transforming Healthcare Delivery",
-    client: "MedConnect Inc.",
-    description: "Designed and developed a telemedicine platform that reduced patient wait times by 60% and increased doctor-patient engagement.",
-    image: "https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=800&h=500&fit=crop",
-    duration: "6 months",
-    teamSize: "8 people",
-    impact: "60% faster",
-    category: "Healthcare",
+    title: "When Genshin Goes Quiet",
+    description:
+      "PM Case Study · Engagement & Retention. Root-cause analysis of a mid-patch engagement cliff in Genshin Impact. Identified retention failure points and proposed a framework to re-engage lapsed players using behavioral data patterns.",
+    link: "https://climbing-quiver-c34.notion.site/Genshin-Impact-Case-Study-3280cb8dd27e80a095a0f1734c6e68fb",
   },
   {
-    id: 2,
-    title: "Scaling Fintech Operations",
-    client: "PayFlow Solutions",
-    description: "Built a microservices architecture that handled 10x transaction volume growth while maintaining 99.99% uptime.",
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=500&fit=crop",
-    duration: "8 months",
-    teamSize: "12 people",
-    impact: "10x scale",
-    category: "Fintech",
-  },
-  {
-    id: 3,
-    title: "Revolutionizing E-Learning",
-    client: "EduPro Academy",
-    description: "Created an adaptive learning platform using AI that improved student completion rates by 45% and engagement by 80%.",
-    image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&h=500&fit=crop",
-    duration: "10 months",
-    teamSize: "6 people",
-    impact: "45% higher completion",
-    category: "EdTech",
+    title: "The Valorant Smurf Tax",
+    description:
+      "PM Case Study · Trust & Safety. Analysis of why Riot's current smurf detection fails and what behavioral signals + system design would actually fix ranked integrity at scale.",
+    link: "https://climbing-quiver-c34.notion.site/Valorant-Case-Study-32f0cb8dd27e8013bbd2fbb9283ef23d",
   },
 ];
 
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.14,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 24 },
+  visible: { opacity: 1, y: 0 },
+};
+
 export function CaseStudies() {
+  const reducedMotion = useReducedMotion();
+
   return (
-    <section id="case-studies" className="py-24 bg-muted/30">
-      <div className="max-w-7xl mx-auto px-6">
+    <section id="case-studies" className="py-24 md:py-28">
+      <div className="section-shell">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mb-16"
+          viewport={{ once: true, amount: 0.35 }}
+          transition={{ duration: reducedMotion ? 0 : 0.58 }}
+          className="mb-10 md:mb-12"
         >
-          <span className="text-primary font-medium">Deep Dives</span>
-          <h2 className="text-4xl md:text-5xl font-bold mt-2 mb-4">
-            Case Studies
-          </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            Detailed explorations of complex projects, documenting the challenges, 
-            solutions, and outcomes of real-world implementations.
-          </p>
+          <p className="text-xs uppercase tracking-[0.32em] text-brand-cyan">Deep Dives</p>
+          <h2 className="font-display mt-4 text-5xl text-brand-ivory sm:text-6xl md:text-7xl">Case Studies</h2>
         </motion.div>
 
-        <div className="space-y-16">
-          {caseStudies.map((study, index) => (
-            <motion.div
-              key={study.id}
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
-              className={`grid lg:grid-cols-2 gap-8 items-center ${
-                index % 2 === 1 ? "lg:flex-row-reverse" : ""
-              }`}
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.22 }}
+          className="space-y-5"
+        >
+          {caseStudies.map((study) => (
+            <motion.article
+              key={study.title}
+              variants={itemVariants}
+              transition={{ duration: reducedMotion ? 0 : 0.6, ease: "easeOut" }}
+              className="glass-card group flex w-full flex-col justify-between gap-6 rounded-3xl p-7 md:flex-row md:items-center md:p-9"
             >
-              <div className={index % 2 === 1 ? "lg:order-2" : ""}>
-                <div className="relative group overflow-hidden rounded-2xl">
-                  <img
-                    src={study.image}
-                    alt={study.title}
-                    className="w-full h-80 object-cover group-hover:scale-105 transition-transform duration-700"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-foreground/60 to-transparent" />
-                  <div className="absolute bottom-6 left-6">
-                    <span className="px-3 py-1 bg-primary text-primary-foreground text-sm font-medium rounded-full">
-                      {study.category}
-                    </span>
-                  </div>
-                </div>
+              <div className="max-w-3xl">
+                <h3 className="font-display text-4xl text-brand-ivory sm:text-5xl">{study.title}</h3>
+                <p className="mt-3 text-sm leading-relaxed text-[#f0ede8]/76 sm:text-base">{study.description}</p>
               </div>
 
-              <div className={index % 2 === 1 ? "lg:order-1" : ""}>
-                <p className="text-sm text-muted-foreground mb-2">{study.client}</p>
-                <h3 className="text-3xl font-bold mb-4">{study.title}</h3>
-                <p className="text-muted-foreground mb-6 leading-relaxed">
-                  {study.description}
-                </p>
-
-                <div className="grid grid-cols-3 gap-4 mb-6">
-                  <div className="p-4 bg-card rounded-lg border border-border">
-                    <Clock className="w-5 h-5 text-primary mb-2" />
-                    <p className="text-sm text-muted-foreground">Duration</p>
-                    <p className="font-semibold">{study.duration}</p>
-                  </div>
-                  <div className="p-4 bg-card rounded-lg border border-border">
-                    <Users className="w-5 h-5 text-primary mb-2" />
-                    <p className="text-sm text-muted-foreground">Team</p>
-                    <p className="font-semibold">{study.teamSize}</p>
-                  </div>
-                  <div className="p-4 bg-card rounded-lg border border-border">
-                    <TrendingUp className="w-5 h-5 text-primary mb-2" />
-                    <p className="text-sm text-muted-foreground">Impact</p>
-                    <p className="font-semibold">{study.impact}</p>
-                  </div>
-                </div>
-
-                <Button className="group">
-                  Read Full Case Study
-                  <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
-                </Button>
-              </div>
-            </motion.div>
+              <a
+                href={study.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                data-cursor-hover="true"
+                className="shrink-0 text-sm uppercase tracking-[0.22em] text-brand-cyan transition-transform duration-300 group-hover:translate-x-1"
+              >
+                Read Case Study &rarr;
+              </a>
+            </motion.article>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );
 }
+

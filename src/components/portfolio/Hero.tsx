@@ -1,145 +1,149 @@
-import { motion } from "framer-motion";
-import { ArrowDown, Github, Linkedin, Mail } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { lazy, Suspense, useRef } from "react";
+import { motion, useReducedMotion } from "framer-motion";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+
+const HeroThreeScene = lazy(() => import("./HeroThreeScene"));
+
+const heroWords = ["I BUILD", "DIGITAL", "EXPERIENCES"];
+const githubUrl = "https://github.com/ShivamSharma6214";
+const linkedInUrl = "https://linkedin.com/in/shivamsharma6214";
+const emailAddress = "sharmashivam6214@gmail.com";
 
 export function Hero() {
+  const headingRef = useRef<(HTMLDivElement | null)[]>([]);
+  const subtitleRef = useRef<HTMLParagraphElement | null>(null);
+  const ctaRef = useRef<HTMLDivElement | null>(null);
+  const reducedMotion = useReducedMotion();
+
+  useGSAP(() => {
+    if (reducedMotion) {
+      return;
+    }
+
+    gsap.fromTo(
+      headingRef.current,
+      { y: 100, opacity: 0 },
+      {
+        y: 0,
+        opacity: 1,
+        duration: 0.95,
+        ease: "power4.out",
+        stagger: 0.14,
+        delay: 0.24,
+      },
+    );
+
+    gsap.fromTo(
+      subtitleRef.current,
+      { y: 28, opacity: 0 },
+      {
+        y: 0,
+        opacity: 1,
+        duration: 0.72,
+        delay: 0.82,
+        ease: "power2.out",
+      },
+    );
+
+    gsap.fromTo(
+      ctaRef.current,
+      { y: 22, opacity: 0 },
+      {
+        y: 0,
+        opacity: 1,
+        duration: 0.72,
+        delay: 1.02,
+        ease: "power2.out",
+      },
+    );
+  }, [reducedMotion]);
+
   return (
-    <section
-      id="home"
-      className="min-h-screen flex items-center justify-center relative overflow-hidden"
-    >
-      {/* Background gradient */}
-      <div className="absolute inset-0 bg-[var(--gradient-hero)]" />
-      
-      {/* Grid pattern overlay */}
-      <div 
-        className="absolute inset-0 opacity-[0.03]"
-        style={{
-          backgroundImage: `linear-gradient(hsl(var(--foreground)) 1px, transparent 1px),
-                           linear-gradient(90deg, hsl(var(--foreground)) 1px, transparent 1px)`,
-          backgroundSize: '60px 60px'
-        }}
-      />
+    <section id="home" className="relative flex min-h-screen items-center overflow-hidden pt-24">
+      <div className="blob-orb absolute -left-24 top-20 h-72 w-72 rounded-full bg-brand-cyan/18 blur-3xl" />
+      <div className="blob-orb absolute -right-20 bottom-20 h-80 w-80 rounded-full bg-brand-violet/18 blur-3xl" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_65%_40%,rgba(0,212,255,0.08),transparent_36%),radial-gradient(circle_at_30%_80%,rgba(124,58,237,0.12),transparent_42%)]" />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6 py-20">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-          >
-            <motion.p
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.2 }}
-              className="text-primary font-medium mb-4"
-            >
-              Hello, I'm
-            </motion.p>
-            
-            <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
-              className="text-5xl md:text-7xl font-bold mb-6 leading-tight"
-            >
-              <span className="text-foreground">Shivam</span>
-              <br />
-              <span className="text-primary">Sharma</span>
-            </motion.h1>
+      <motion.div
+        initial={{ opacity: 0, scale: 0.92 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: reducedMotion ? 0 : 1.1, ease: "easeOut", delay: reducedMotion ? 0 : 0.3 }}
+        className="pointer-events-none absolute inset-y-0 right-0 z-0 w-[62vw] min-w-[280px] sm:w-[52vw] lg:w-[48vw]"
+      >
+        <Suspense fallback={<div className="h-full w-full" />}>
+          <HeroThreeScene />
+        </Suspense>
+      </motion.div>
 
-            <motion.p
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.5 }}
-              className="text-lg text-muted-foreground max-w-md mb-8"
-            >
-              Aspiring Product Manager focused on turning ideas into real products through structured problem solving, rapid prototyping, and AI-assisted development, combining product thinking with technical understanding to ship usable solutions. Explore my work below.
-            </motion.p>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.7 }}
-              className="flex flex-wrap gap-4"
-            >
-              <Button size="lg" asChild>
-                <a href="#projects">View Projects</a>
-              </Button>
-              <Button size="lg" variant="outline" className="border-primary-foreground/20 text-primary-foreground hover:bg-primary-foreground/10" asChild>
-                <a href="#contact">Get in Touch</a>
-              </Button>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.9 }}
-              className="flex gap-4 mt-8"
-            >
-              <a
-                href="https://github.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2 rounded-full bg-primary-foreground/10 text-primary-foreground hover:bg-primary-foreground/20 transition-colors"
+      <div className="section-shell relative z-10">
+        <div className="max-w-3xl">
+          <div className="space-y-1 text-[3.1rem] uppercase leading-[0.9] text-brand-ivory sm:text-[4.6rem] md:text-[6.2rem] lg:text-[7.5rem]">
+            {heroWords.map((word, index) => (
+              <div
+                key={word}
+                ref={(element) => {
+                  headingRef.current[index] = element;
+                }}
+                className="font-display"
               >
-                <Github className="w-5 h-5" />
-              </a>
-              <a
-                href="https://linkedin.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2 rounded-full bg-primary-foreground/10 text-primary-foreground hover:bg-primary-foreground/20 transition-colors"
-              >
-                <Linkedin className="w-5 h-5" />
-              </a>
-              <a
-                href="mailto:shivam@example.com"
-                className="p-2 rounded-full bg-primary-foreground/10 text-primary-foreground hover:bg-primary-foreground/20 transition-colors"
-              >
-                <Mail className="w-5 h-5" />
-              </a>
-            </motion.div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="flex justify-center mb-10 lg:mb-0"
-          >
-            <div className="relative">
-              {/* Decorative elements */}
-              <div className="absolute -top-8 -left-8 w-64 h-64 bg-primary/20 rounded-full blur-3xl" />
-              <div className="absolute -bottom-8 -right-8 w-48 h-48 bg-primary/30 rounded-full blur-2xl" />
-              
-              {/* Profile image with frosted glass effect */}
-              <div className="relative w-72 h-[28rem] rounded-3xl bg-gradient-to-br from-primary/20 to-primary/5 border border-primary/20 overflow-hidden shadow-[0_25px_80px_rgba(15,23,42,0.35)]">
-                <img
-                  src="/portrait.png"
-                  alt="Shivam Sharma portrait"
-                  className="w-full h-full object-cover object-center"
-                />
+                {word}
               </div>
-            </div>
-          </motion.div>
+            ))}
+          </div>
+
+          <p
+            ref={subtitleRef}
+            className="mt-7 max-w-lg text-sm uppercase tracking-[0.24em] text-[#f0ede8]/72 sm:text-base"
+          >
+            Freelance Developer · Product Manager · Builder of Real Things
+          </p>
+
+          <div ref={ctaRef} className="mt-10 flex flex-wrap items-center gap-4">
+            <a
+              href="#projects"
+              data-cursor-hover="true"
+              className="elevated-glow rounded-full border border-brand-cyan/80 bg-brand-cyan/10 px-7 py-3 text-xs font-semibold uppercase tracking-[0.24em] text-brand-cyan sm:text-sm"
+            >
+              See My Work
+            </a>
+            <a
+              href="#contact"
+              data-cursor-hover="true"
+              className="rounded-full border border-white/20 bg-white/[0.03] px-7 py-3 text-xs font-semibold uppercase tracking-[0.24em] text-brand-ivory hover:border-brand-cyan/70 hover:text-brand-cyan sm:text-sm"
+            >
+              Let&apos;s Talk
+            </a>
+            <a
+              href={githubUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              data-cursor-hover="true"
+              className="rounded-full border border-white/20 bg-white/[0.03] px-7 py-3 text-xs font-semibold uppercase tracking-[0.24em] text-brand-ivory hover:border-brand-cyan/70 hover:text-brand-cyan sm:text-sm"
+            >
+              GitHub
+            </a>
+            <a
+              href={linkedInUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              data-cursor-hover="true"
+              className="rounded-full border border-white/20 bg-white/[0.03] px-7 py-3 text-xs font-semibold uppercase tracking-[0.24em] text-brand-ivory hover:border-brand-cyan/70 hover:text-brand-cyan sm:text-sm"
+            >
+              LinkedIn
+            </a>
+            <a
+              href={`mailto:${emailAddress}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              data-cursor-hover="true"
+              className="rounded-full border border-white/20 bg-white/[0.03] px-7 py-3 text-xs font-semibold uppercase tracking-[0.24em] text-brand-ivory hover:border-brand-cyan/70 hover:text-brand-cyan sm:text-sm"
+            >
+              {emailAddress}
+            </a>
+          </div>
         </div>
       </div>
-
-      {/* Scroll indicator */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.2 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2"
-      >
-        <motion.div
-          animate={{ y: [0, 10, 0] }}
-          transition={{ repeat: Infinity, duration: 2 }}
-        >
-          <ArrowDown className="w-6 h-6 text-primary-foreground/50" />
-        </motion.div>
-      </motion.div>
     </section>
   );
 }
