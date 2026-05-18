@@ -15,7 +15,7 @@ const projects: ProjectEntry[] = [
   {
     name: "UrbanIQ",
     description:
-      "University-Deployed Platform · Jan 2024 – Dec 2024. Campus complaint and document management platform adopted by university administration. Processed 4,000+ submissions across departments in 4 months. Ran Python (pandas) EDA on complaint records — findings reduced avg. resolution time by 30%. Built Metabase dashboard for weekly ops review.",
+      "University-Deployed Platform · Jan 2024 – Dec 2024. Campus complaint and document management platform. Processed 4,000+ submissions across departments in 4 months. Ran Python (pandas) EDA on complaint records — findings reduced avg. resolution time by 30%. Built Metabase dashboard for weekly ops review.",
     tags: [
       "Product Management",
       "Python",
@@ -72,7 +72,7 @@ const projects: ProjectEntry[] = [
 ];
 
 export function ProjectsSection() {
-  const cardRefs = useRef<(HTMLArticleElement | null)[]>([]);
+  const cardRefs = useRef<(HTMLElement | null)[]>([]);
   const reducedMotion = useReducedMotion();
 
   useGSAP(() => {
@@ -127,7 +127,13 @@ export function ProjectsSection() {
           ease: "power3.out",
         });
         if (glow) {
-          gsap.to(glow, { x: 0, y: 0, opacity: 0.32, duration: 0.45, ease: "power2.out" });
+          gsap.to(glow, {
+            x: 0,
+            y: 0,
+            opacity: 0.32,
+            duration: 0.45,
+            ease: "power2.out",
+          });
         }
       };
 
@@ -157,8 +163,12 @@ export function ProjectsSection() {
           transition={{ duration: reducedMotion ? 0 : 0.6 }}
           className="mb-12 md:mb-14"
         >
-          <p className="text-xs uppercase tracking-[0.32em] text-brand-cyan">Selected Work</p>
-          <h2 className="font-display mt-4 text-5xl text-brand-ivory sm:text-6xl md:text-7xl">Projects</h2>
+          <p className="text-xs uppercase tracking-[0.32em] text-brand-cyan">
+            Selected Work
+          </p>
+          <h2 className="font-display mt-4 text-5xl text-brand-ivory sm:text-6xl md:text-7xl">
+            Projects
+          </h2>
         </motion.div>
 
         <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
@@ -189,7 +199,9 @@ export function ProjectsSection() {
               <div className="absolute inset-0 rounded-3xl border border-brand-cyan/0 transition-colors duration-300 group-hover:border-brand-cyan/60" />
 
               <div className="relative z-10">
-                <h3 className="font-display text-4xl text-brand-ivory sm:text-5xl">{project.name}</h3>
+                <h3 className="font-display text-4xl text-brand-ivory sm:text-5xl">
+                  {project.name}
+                </h3>
                 <p className="mt-4 max-w-2xl text-sm leading-relaxed text-[#f0ede8]/76 sm:text-base">
                   {project.description}
                 </p>
@@ -222,4 +234,3 @@ export function ProjectsSection() {
     </section>
   );
 }
-

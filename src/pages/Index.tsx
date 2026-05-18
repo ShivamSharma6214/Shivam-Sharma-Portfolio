@@ -35,7 +35,6 @@ const skillMarqueeItems = [
   "Git",
   "Jira",
   "Notion",
-  
 ];
 
 const marqueeText = `${skillMarqueeItems.join(" · ")} · `;
@@ -142,7 +141,7 @@ const Index = () => {
     <div className="relative min-h-screen bg-[#050508] text-[#f0ede8]">
       <CustomCursor />
       <Navbar />
-      <main>
+      <main className="relative z-10">
         <Hero />
         <MarqueeStrip />
         <div id="work">

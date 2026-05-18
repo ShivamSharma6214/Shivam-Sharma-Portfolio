@@ -12,15 +12,17 @@ const fallback = (
 );
 
 const App = () => (
-  <BrowserRouter>
-    <Suspense fallback={fallback}>
-      <Routes>
-        <Route path="/" element={<Index />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </Suspense>
-  </BrowserRouter>
+  <>
+    <BrowserRouter>
+      <Suspense fallback={fallback}>
+        <Routes>
+          <Route path="/" element={<Index />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </Suspense>
+    </BrowserRouter>
+  </>
 );
 
 export default App;

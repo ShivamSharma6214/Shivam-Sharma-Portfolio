@@ -49,8 +49,12 @@ export function CaseStudies() {
           transition={{ duration: reducedMotion ? 0 : 0.58 }}
           className="mb-10 md:mb-12"
         >
-          <p className="text-xs uppercase tracking-[0.32em] text-brand-cyan">Deep Dives</p>
-          <h2 className="font-display mt-4 text-5xl text-brand-ivory sm:text-6xl md:text-7xl">Case Studies</h2>
+          <p className="text-xs uppercase tracking-[0.32em] text-brand-cyan">
+            Deep Dives
+          </p>
+          <h2 className="font-display mt-4 text-5xl text-brand-ivory sm:text-6xl md:text-7xl">
+            Case Studies
+          </h2>
         </motion.div>
 
         <motion.div
@@ -60,16 +64,27 @@ export function CaseStudies() {
           viewport={{ once: true, amount: 0.22 }}
           className="space-y-5"
         >
-          {caseStudies.map((study) => (
+          {caseStudies.map((study, index) => (
             <motion.article
               key={study.title}
-              variants={itemVariants}
-              transition={{ duration: reducedMotion ? 0 : 0.6, ease: "easeOut" }}
-              className="glass-card group flex w-full flex-col justify-between gap-6 rounded-3xl p-7 md:flex-row md:items-center md:p-9"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              whileHover={reducedMotion ? undefined : { scale: 1.01 }}
+              whileTap={reducedMotion ? undefined : { scale: 0.99 }}
+              viewport={{ once: true, amount: 0.28 }}
+              transition={{
+                duration: reducedMotion ? 0 : 0.65,
+                delay: reducedMotion ? 0 : index * 0.07,
+              }}
+              className="glass-card group flex w-full cursor-pointer flex-col justify-between gap-6 rounded-3xl p-7 md:flex-row md:items-center md:p-9"
             >
               <div className="max-w-3xl">
-                <h3 className="font-display text-4xl text-brand-ivory sm:text-5xl">{study.title}</h3>
-                <p className="mt-3 text-sm leading-relaxed text-[#f0ede8]/76 sm:text-base">{study.description}</p>
+                <h3 className="font-display text-4xl text-brand-ivory sm:text-5xl">
+                  {study.title}
+                </h3>
+                <p className="mt-3 text-sm leading-relaxed text-[#f0ede8]/76 sm:text-base">
+                  {study.description}
+                </p>
               </div>
 
               <a
@@ -88,4 +103,3 @@ export function CaseStudies() {
     </section>
   );
 }
-
